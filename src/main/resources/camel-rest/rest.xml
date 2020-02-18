@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rests xmlns="http://camel.apache.org/schema/spring">
+    <rest id="myRest" path="/rest">
+        <get uri="/product/{productId}">
+            <to uri="direct:getProduct"/>
+        </get>
+<!--
+        <get uri="/bye">
+            <to uri="direct:bye"/>
+        </get>
+    -->
+    </rest>
+</rests>
