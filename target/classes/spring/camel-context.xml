@@ -8,15 +8,56 @@
 
   <!-- Define a traditional camel context here -->
   <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <propertyPlaceholder id="properties" location="application.properties"/>
 
-    <route id="_route1">
-      <from id="_from1" uri="direct:getProduct"/>
-      <camel:log message="logged: ${header.productId}"></camel:log>
-      <camel:setBody>
-        <camel:simple>productId ${header.productId}</camel:simple>
-      </camel:setBody>
-  </route>    
+        <route id="_route1">
+          <from id="_from1" uri="direct:getProduct"/>
+          <camel:to uri="direct:getInfo"/>
+          <enrich strategyRef="aggregationStrategy">
+            <constant>direct:getPrice</constant>
+          </enrich>      
+          <camel:setHeader headerName="Content-Type">
+            <camel:simple>text/plain</camel:simple>
+          </camel:setHeader>
+          <camel:log message="${body}"></camel:log>
+
+      </route>    
+      <camel:route id="getInfo">
+        <from id="getInfo" uri="direct:getInfo"/>
+        <camel:log message="logged: ${header.productId}"></camel:log>
+        <to id="_to1" uri="sql:select * from products where productId =:#productId?dataSourceRef=mariadbDS"/>
+        <camel:log message="results: ${body}"></camel:log>
+        <camel:setBody>
+          <camel:simple>${body[0][productName]}</camel:simple>
+        </camel:setBody>
+        
+      </camel:route>
+
+  <camel:route id="getPrice">
+    <from id="getInfo" uri="direct:getPrice"/>
+    <camel:log message="logged: ${header.productId}"></camel:log>
+    <removeHeaders pattern="CamelHttp*" />
+    <setHeader headerName="CamelHttpUri">
+      <simple>http://{{url.priceservice}}</simple>
+  </setHeader>  
+    <setHeader headerName="CamelHttpMethod">
+      <constant>GET</constant>
+    </setHeader>
+      <to uri="http4://{{url.priceservice}}"/>
+      <convertBodyTo type="java.lang.String"/> 
+      <camel:log message="${body}"></camel:log>
+</camel:route>
+
 
   </camelContext>
+  <bean id="aggregationStrategy" class="com.redhat.ProductAggregationStrategy" />
+
+  <bean
+  class="org.springframework.jdbc.datasource.SimpleDriverDataSource" id="mariadbDS">
+  <property name="driverClass" value="${db.driver}"/>
+  <property name="url" value="${db.url}"/>
+  <property name="username" value="${db.username}"/>
+  <property name="password" value="${db.password}"/>
+</bean>
 
 </beans>

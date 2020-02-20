@@ -3,7 +3,9 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   annotations:
+    fabric8.io/git-commit: 902290a4a18eb976946cdeb05b5a4388acb9bcde
     fabric8.io/iconUrl: img/icons/camel.svg
+    fabric8.io/git-branch: master
     fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=product&var-version=1.0
   labels:
     app: product
@@ -25,7 +27,9 @@ spec:
   template:
     metadata:
       annotations:
+        fabric8.io/git-commit: 902290a4a18eb976946cdeb05b5a4388acb9bcde
         fabric8.io/iconUrl: img/icons/camel.svg
+        fabric8.io/git-branch: master
         fabric8.io/metrics-path: dashboard/file/camel-routes.json/?var-project=product&var-version=1.0
       labels:
         app: product

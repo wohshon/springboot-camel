@@ -10,6 +10,6 @@ items:
     tags:
     - from:
         kind: ImageStreamImage
-        name: product@sha256:128e38c33a16d90f54bf8a4134efc4d49604b133f78d85a96192d13e9652c160
-        namespace: amp
+        name: product@sha256:dcf314addd876be48d683828867b1215157c8a2cae2f36634b278ad893325c73
+        namespace: apps
       name: "1.0"

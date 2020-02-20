@@ -6,9 +6,11 @@
     "kind" : "Service",
     "metadata" : {
       "annotations" : {
+        "fabric8.io/git-commit" : "902290a4a18eb976946cdeb05b5a4388acb9bcde",
         "fabric8.io/iconUrl" : "img/icons/camel.svg",
-        "prometheus.io/port" : "9779",
-        "prometheus.io/scrape" : "true"
+        "fabric8.io/git-branch" : "master",
+        "prometheus.io/scrape" : "true",
+        "prometheus.io/port" : "9779"
       },
       "labels" : {
         "expose" : "true",
@@ -37,7 +39,9 @@
     "kind" : "Deployment",
     "metadata" : {
       "annotations" : {
+        "fabric8.io/git-commit" : "902290a4a18eb976946cdeb05b5a4388acb9bcde",
         "fabric8.io/iconUrl" : "img/icons/camel.svg",
+        "fabric8.io/git-branch" : "master",
         "fabric8.io/metrics-path" : "dashboard/file/camel-routes.json/?var-project=product&var-version=1.0"
       },
       "labels" : {
@@ -61,7 +65,9 @@
       "template" : {
         "metadata" : {
           "annotations" : {
+            "fabric8.io/git-commit" : "902290a4a18eb976946cdeb05b5a4388acb9bcde",
             "fabric8.io/iconUrl" : "img/icons/camel.svg",
+            "fabric8.io/git-branch" : "master",
             "fabric8.io/metrics-path" : "dashboard/file/camel-routes.json/?var-project=product&var-version=1.0"
           },
           "labels" : {
